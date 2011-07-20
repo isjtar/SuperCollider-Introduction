@@ -4,7 +4,17 @@
 \red0\green115\blue0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs30 \cf2 // overview if Ugens in Help\cf3 \
+\f0\fs26 \cf2 // overview if Ugens in Help\cf3 \
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1\fs22 \cf3 ugens to use: \cf4 SinOsc\cf3 , \cf4 Pulse\cf3 , \cf4 LFPulse\cf3 , \cf4 Saw\cf3 , \cf4 LFSaw\cf3 , \cf4 LFTri\cf3 , \cf4 Phasor\cf3 , \cf4 Dust\cf3 , \cf4 Impulse\cf3 , \cf4 LFNoise0\cf3 , \cf4 LFNoise1\cf3 , \cf4 LFNoise2\cf3 , \cf4 BrownNoise\cf3 , \cf4 PinkNoise\cf3 , \cf4 GrayNoise\cf3 , \cf4 ClipNoise\cf3 , \cf4 WhiteNoise\cf3 \
+	\cf4 Dust2\cf3 \
+\
+methods to use... round, fold, clip, max, min, thresh, hypot, dist, lag, lag2, fold2, wrap, sqrt, pow, abs, +, -, *, /, %\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs26 \cf3 -> check the operators overview in the help\
 \
 \cf2 // use internal server for scope and freqscope GUI\cf3 \
 s = \cf4 Server\cf3 .internal.boot;\
@@ -13,61 +23,157 @@ s = \cf4 Server\cf3 .internal.boot;\
 \cf2 // instead of .play .scope .freqscope\cf3 \
 \cf2 // MouseX.kr(min, max, warp) \cf3 \
 \cf2 // MouseY.kr\cf3 \
-\cf4 Symbol\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\fs32 \{\cf4 SinOsc\cf3 .ar(\cf4 MouseY\cf3 .kr(20, 10000, \cf5 \\linear\cf3 )) * \cf4 MouseX\cf3 .kr(0, 1)\}.scope\cf2 // inspect amplitude\cf3 \
+\f1\fs22 \cf3 \
+\{\cf4 SinOsc\cf3 .ar(\cf4 MouseY\cf3 .kr(20, 10000, \cf5 \\linear\cf3 )) * \cf4 MouseX\cf3 .kr(0, 1)\}.scope\cf2 // inspect amplitude\cf3 \
 \{\cf4 Saw\cf3 .ar\}.freqscope	 \cf2 // inspect the spectrum\cf3 \
 \
 \{(\cf4 BrownNoise\cf3 .ar * \cf4 SinOsc\cf3 .ar(0.1)) + (\cf4 SinOsc\cf3 .ar(666).distort * 2  * \cf4 LFSaw\cf3 .kr(1)) \}.play\
 \
 \cf2 // multichannel expansion -> use arrays -> we have two channels, so arrays of size 2\cf3 \
-\
 \{\cf4 Saw\cf3 .ar ! 2\}.scope	 \cf2 // easy stereo\cf3 \
 \
-\
-\cf2 // more complex\cf3 \
-
-\fs34 \{(\cf4 BrownNoise\cf3 .ar * \cf4 SinOsc\cf3 .ar([0.1, 0.01])) + (\cf4 SinOsc\cf3 .ar([666, 667]).distort * 2  * \cf4 LFSaw\cf3 .kr(1)) \}.play\
-\
-\cf2 \
+\cf2 // more complex, arrays as arguments\cf3 \
+\{(\cf4 BrownNoise\cf3 .ar * \cf4 SinOsc\cf3 .ar([0.1, 0.01])) + (\cf4 SinOsc\cf3 .ar([666, 667]).distort * 2  * \cf4 LFSaw\cf3 .kr(1)) \}.play\
 \
 \
+\cf2 // if you want to use arrays but not expand to multiple output channels -> Mix.new\cf3 \
+\{\cf4 Mix\cf3 .new(\cf4 SinOsc\cf3 .ar([200, 400, 600, 800]))\}.play; \cf2 // just mixing down an array to 1 channel\cf3 \
+\{\cf4 Mix\cf3 .fill(100, \{\cf4 |i|\cf3  \cf4 SinOsc\cf3 .ar(i + 1 * 200 + 200)\}) * 0.01\}.play \cf2 // using a function to compose an array\cf3 \
+\
+\cf2 // similar to this idea\cf3 \
+100.do\{\cf4 |i|\cf3  \{\cf4 SinOsc\cf3 .ar(i * 100) * \cf4 SinOsc\cf3 .ar(rrand(0.1, 1)) * 0.1\}.play\};\
+\cf2 // but much cleaner: 1 function many Ugens. \cf3 \
 \
 \
-// simple cheap envelopes\cf3 \
-\cf2 // transient generator e.g. Impulse, Dust\cf3 \
+\cf2 // simple cheap envelopes\cf3 \
+\cf2 //// first make pulses with a transient generator e.g. Impulse, Dust\cf3 \
 \{\cf4 Dust\cf3 .ar(5)\}.play \cf2 // popcorn noise\cf3 \
 \{\cf4 Impulse\cf3 .ar(5)\}.play \cf2 // regular impulses\cf3 \
 \
-\cf2 // add lag to make them an envelope\cf3 \
+\cf2 //// add lag to make them an envelope\cf3 \
 \{\cf4 Impulse\cf3 .ar.lag(0.1)\}.scope; \cf2 // lag time of 0.1 seconds, no sound by itself, just an envelope \cf3 \
-
-\fs32 \
-\cf2 //mul with a snd source -- lag/lag2/lag3 sound different\cf3 \
-
-\fs34 \{\cf4 Impulse\cf3 .ar(2).lag3(0.1) * \cf4 Saw\cf3 .ar(400 + LFNoise0.kr(2).range(100, 800)) * 1000\}.scope; \cf2 // mul by a lot, lag makes it sound low\cf3 \
-
-\fs32 \
+\
+\cf2 //// mul with a snd source -- lag/lag2/lag3 sound different\cf3 \
+\{\cf4 Impulse\cf3 .ar(2).lag3(0.1) * \cf4 Saw\cf3 .ar(400 + \cf4 LFNoise0\cf3 .kr(2).range(100, 800)) * 1000\}.scope; \cf2 // mul by a lot, lag makes it sound low\cf3 \
+\
+\cf2 //// waveshaping example, watch the scope and the post windows\cf3 \
+\{\cf4 LFTri\cf3 .ar(900).fold(\cf4 MouseX\cf3 .kr.poll, \cf4 MouseY\cf3 .kr.poll)\}.play\
+\
+( \cf2 // some soudns playing together\cf3 \
+\pard\pardeftab720\ql\qnatural
+\cf3 \{\cf4 Pulse\cf3 .ar(400).round(0.8).lag2(\cf4 LFTri\cf3 .kr(0.2).range(0.01, 0.1)) ! 2 * 10\}.play;\
+\{\cf4 Dust\cf3 .ar(\cf4 LFNoise0\cf3 .kr(1).range(0.1, 20)).lag(\cf4 LFNoise2\cf3 .kr(0.5).range(0.1,2)) * \cf4 Mix\cf3 .fill(8, \{\cf4 |i|\cf3  \cf4 SinOsc\cf3 .ar(i * 1000)\}) ! 2 * 10\}.play;\
+\{(\cf4 LFPulse\cf3 .ar(0.1).lag(3) * \cf4 Impulse\cf3 .ar(5).lag(\cf4 LFNoise0\cf3 .kr(1).range(0.1, 2))) * \cf4 SinOsc\cf3 .ar(300 + \cf4 SinOsc\cf3 .ar(2000).range(\cf4 LFNoise0\cf3 .kr([0.5,0.5]).exprange(200, 1000), \cf4 LFNoise0\cf3 .kr(0.5).exprange(20, 12000, 1))).round(1) * 150\}.play;\
+\{\cf4 Impulse\cf3 .ar(1/4).lag(4) * \cf4 Mix\cf3 .new(\cf4 Saw\cf3 .ar([[100, 101], [1000, 1002], [10000, 10003]] )).round(\cf4 LFSaw\cf3 .kr(1)) * 1350\}.play\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf3 )\
+\pard\pardeftab720\ql\qnatural
+\cf3 \
+\cf2 // ------------------------------------------------\cf3 \
+\
+\cf2 // not enough control, we're building static entities, mostly one at a time\cf3 \
+\
+\cf2 // a prototype SynthDef -> a class that takes a name and a function and gets added to the server\cf3 \
+\cf2 // the arguments are converted into Control.kr UGens\cf3 \
+\
+\
+(\
+\
+\cf4 SynthDef\cf3 (\cf5 \\mySine\cf3 , \{\
+	\cf4 |freq = 440, amp = 1, out = 0|\cf3  	\cf2 // default values, works in any type of function\cf3 \
+	\cf4 var\cf3  sig;\
+	sig = \cf4 SinOsc\cf3 .ar(freq) * amp; \
+	\cf4 Out\cf3 .ar(0, sig); 				\cf2 // we need to specify the output bus. 0 and 1 are laptop sound out\cf3 \
+\}).add; 							\cf2 // use .add or .store -.store is for writing to disk and remembering\cf3 \
+\
+a = \cf4 Synth\cf3 (\cf5 \\mySine\cf3 );\
+a.set(\cf5 \\freq\cf3 , 100); 				\cf2 // arguments are settable, they're your way to change a running synth\cf3 \
+a.set(\cf5 \\amp\cf3 , 0.1);					\cf2 // overwrites the default values	\cf3 \
+\
+a = \cf4 Synth\cf3 (\cf5 \\mySine\cf3 , [\cf5 \\freq\cf3 , 888, \cf5 \\amp\cf3 , 0.3]); \cf2 // args in an array, to set them when launching "instantiating" the Synth\cf3 \
+\
+\cf2 // stereo with multichannel expansion\cf3 \
+\cf4 SynthDef\cf3 (\cf5 \\mySine\cf3 , \{\
+	\cf4 |freq = 440, amp = 1, out = 0|\cf3  \
+	\cf4 var\cf3  sig;\
+	sig = \cf4 SinOsc\cf3 .ar(freq) * amp;\
+	\cf4 Out\cf3 .ar([out, out + 1], sig); 	\cf2 // same signal doubled to stereo\cf3 \
+\}).add; 	\
+\
+\cf4 SynthDef\cf3 (\cf5 \\mySine\cf3 , \{\
+	\cf4 |freq = 440, amp = 1, out = 0, pan = 1|\cf3  \
+	\cf4 var\cf3  sig;\
+	sig = \cf4 Pan2\cf3 .ar(\cf4 SinOsc\cf3 .ar(freq), pan) * amp; \cf2 // a panner like Pan2 will double the channels, like traditional pan\cf3 \
+	\cf4 Out\cf3 .ar(out, sig); 	\
+\}).add; 	\
+\
+a = \cf4 Synth\cf3 (\cf5 \\mySine\cf3 );\
+\
+\
+s.boot\
+\cf4 SynthDef\cf3 (\cf5 \\envNoise\cf3 ,\{\
+	\cf4 |atk = 0.01, rel = 0.1, gate = 1, amp = 1, x = 2000, rq = 0.5, out = 0|\cf3  \cf2 // gate has to default to 1 or the env will never trigger\cf3 \
+	\cf4 var\cf3  sig, env;\
+	env = \cf4 EnvGen\cf3 .kr(\cf4 Env\cf3 .perc(atk, rel), gate, doneAction:2);	\cf2 // doneAction:2 to free the Synth after the env \cf3 \
+	sig = \cf4 WhiteNoise\cf3 .ar;\
+	sig = \cf4 Resonz\cf3 .ar(sig, x, rq) * amp * env;\
+	\cf4 Out\cf3 .ar(out, sig)\
+\}).add\
+\
+\cf4 SynthDef\cf3 (\cf5 \\mySine\cf3 , \{\
+	\cf4 |atk = 0.01, rel = 0.1, gate = 1, freq = 440, amp = 1, out = 0, pan = 1|\cf3  \
+	\cf4 var\cf3  sig, env;\
+	env = \cf4 EnvGen\cf3 .kr(\cf4 Env\cf3 .perc(atk, rel), gate, doneAction:2);\
+	sig = \cf4 Pan2\cf3 .ar(\cf4 SinOsc\cf3 .ar(freq), pan) * amp;\
+	\cf4 Out\cf3 .ar(out, sig * env); 	\
+\}).add; 	\
+\
+\cf4 Synth\cf3 (\cf5 \\envNoise\cf3 );	\
+\
+\cf4 SynthDef\cf3 (\cf5 \\simpleDrone\cf3 ,\{\cf4 Out\cf3 .ar(0, \cf4 SinOsc\cf3 .ar(100, mul:\cf4 SinOsc\cf3 .kr(0.1)))\}).add; \cf2 // 1-line quick and dirty SynthDef\cf3 \
+\
+\cf2 // \{\}.fork is a wrapper for Routine, ~= Task, check their help files\cf3 \
+\
+(\
+\{ \
+	\cf4 Synth\cf3 (\cf5 \\simpleDrone\cf3 ); \cf2 // outside of the loop, only once\cf3 \
+	\
+	\cf4 inf\cf3 .do\{ 			\cf2 // start of the infinite loop, can also be an arbitrary number\cf3 \
+		|i|\
+		\cf4 Synth\cf3 (\cf5 \\mySine\cf3 , [\cf5 \\freq\cf3 , exprand(20, 20000)]);\
+		0.2.wait;		 \
+		\cf4 Synth\cf3 (\cf5 \\envNoise\cf3 , [\cf5 \\x\cf3 , ]);	\
+		0.5.wait; \cf2 // super important to have at least 1 .wait in the loop, otherwise crashes\cf3 \
+	\};\
+	\
+\}.fork; \cf2 // this means it will play on TempoClock, check the hepfile if you want to know more\cf3 \
+)\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
 \pard\pardeftab720\ql\qnatural
 
-\f1\fs26 \cf4 SinOsc\cf3 , \cf4 Pulse\cf3 , \cf4 LFPulse\cf3 , \cf4 Saw\cf3 , \cf4 LFSaw\cf3 , \cf4 LFTri\cf3 , \cf4 Phasor\cf3 , \cf4 Dust\cf3 , \cf4 Impulse\cf3 , \cf4 LFNoise0\cf3 , \cf4 LFNoise1\cf3 , \cf4 LFNoise2\cf3 , \cf4 BrownNoise\cf3 , \cf4 PinkNoise\cf3 , \cf4 GrayNoise\cf3 , \cf4 ClipNoise\cf3 , \cf4 WhiteNoise\cf3 \
-	\cf4 Dust2\cf3 \
-\
-methods to use... round, fold, clip, max, min, thresh, hypot, dist, lag, lag2, fold2, wrap, sqrt, pow, abs, +, -, *, /, %\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-
-\f0\fs32 \
+\f0\fs28 \cf3 \
 }
