@@ -1,0 +1,94 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue191;\red0\green0\blue0;\red0\green115\blue0;
+\red191\green0\blue0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf2 More\cf3  \cf2 SynthDefs\cf3 \
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1\fs22 \cf2 SynthDef\cf3 (\cf4 \\envNoise\cf3 ,\{\
+	\cf2 |atk = 0.01, rel = 0.1, gate = 1, amp = 1, x = 2000, rq = 0.5, out = 0|\cf3 \
+	\cf2 var\cf3  sig, env;\
+	env = \cf2 EnvGen\cf3 .kr(\cf2 Env\cf3 .perc(atk, rel), gate, doneAction:2);	\cf5 // doneAction:2 to free the Synth after the env \cf3 \
+	sig = \cf2 WhiteNoise\cf3 .ar;\
+	sig = \cf2 Resonz\cf3 .ar(sig, x, rq) * amp * env;\
+	\cf2 Out\cf3 .ar(out, sig)\
+\}).add;\
+\
+\cf2 SynthDef\cf3 (\cf4 \\smoothSine\cf3 , \{\
+	\cf2 |freq = 440, duration = 0.3, amp = 1, pan = 0, gate = 1, out = 0|\cf3 	\
+	\cf2 var\cf3  sig, env;\
+	env = \cf2 EnvGen\cf3 .kr(\cf2 Env\cf3 .sine(duration, amp), gate, doneAction:2);\
+	sig = \cf2 SinOsc\cf3 .ar(freq) * env;\
+	sig = \cf2 Pan2\cf3 .ar(sig, env.range(-1, 1));\
+	\cf2 Out\cf3 .ar(out, sig);	\
+\}).add;\
+\cf2 Synth\cf3 (\cf4 \\smoothSine\cf3 )\
+\
+\cf2 SynthDef\cf3 (\cf4 \\filteredSaw\cf3 , \{\
+	\cf2 |freq = 440, duration = 0.3, amp = 1, pan = 0, gate = 1, out = 0|\cf3 	\
+	\cf2 var\cf3  sig, env;\
+	env = \cf2 EnvGen\cf3 .kr(\cf2 Env\cf3 .perc(0.01, 0.1), gate, doneAction:2);\
+	sig = \cf2 Saw\cf3 .ar(freq);\
+	sig = \cf2 RLPF\cf3 .ar(sig, freq + env.range(1000, 5000) , 0.1); \
+	sig = \cf2 Pan2\cf3 .ar(sig, env.range(-1, 1));\
+	\cf2 Out\cf3 .ar(out, sig);	\
+\}).add;\
+\cf2 Synth\cf3 (\cf4 \\filteredSaw\cf3 )\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf5 // fx\cf3 \
+\pard\pardeftab560\ql\qnatural
+\cf2 SynthDef\cf3 (\cf4 \\simpleDelay\cf3 , \{ \
+	\cf2 |in =  42, out = 0, maxdtime = 3, dtime = 0.2, decay = 2, dry_wet = -0.5, amp = 0.1 |\cf3 \
+	\cf2 var\cf3  sig, src;\
+	src = \cf2 In\cf3 .ar(in); 	\cf5 // higher than the inputs  outputs of sound card\cf3 \
+	sig = \cf2 CombL\cf3 .ar(src, maxdtime, dtime, decay, 1);\
+	sig = \cf2 XFade2\cf3 .ar(src, sig, dry_wet) * amp;\
+	\cf2 Out\cf3 .ar(out, sig)\
+\}).add;\
+\
+\cf2 Synth\cf3 (\cf4 \\simpleDelay\cf3 )\
+\pard\pardeftab720\ql\qnatural
+\cf3 \
+\cf5 // Order of Execution -> refer to help\cf3 \
+\
+\cf5 // how to connect?\cf3 \
+\cf5 // first instantiate your effect, then the generator\cf3 \
+\
+~myFX = \cf2 Synth\cf3 (\cf4 \\simpleDelay\cf3 , [\cf4 \\in\cf3 , 42,\cf4 \\amp\cf3 , 2]);\
+~myGen = \cf2 Synth\cf3 (\cf4 \\envNoise\cf3 , [\cf4 \\out\cf3 , 42]); 	\cf5 // -> out should point to in\cf3 \
+\
+~myFX.set(\cf4 \\dtime\cf3 , 0.1); \cf5 // this way you can change params\cf3 \
+\
+\cf5 // make synthdefs, synths which communicate\cf3 \
+now with \cf2 EnvGen\cf3 , \cf2 Pan2\cf3 , \cf2 XFade2\cf3 , \cf2 RLPF\cf3 , \cf2 LPF\cf3 , \cf2 HPF\cf3 , \cf2 Resonz\cf3 , \cf2 CombN\cf3 , \cf2 CombL\cf3 , \cf2 CombC\cf3 , \cf2 AllpassN\cf3 , \cf2 Mix\cf3 , \cf2 Crackle\cf3 ,\
+plus what we already had:\
+\cf2 SinOsc\cf3 , \cf2 Pulse\cf3 , \cf2 LFPulse\cf3 , \cf2 Saw\cf3 , \cf2 LFSaw\cf3 , \cf2 LFTri\cf3 , \cf2 Phasor\cf3 , \cf2 Dust\cf3 , \cf2 Impulse\cf3 , \cf2 LFNoise0\cf3 , \cf2 LFNoise1\cf3 , \cf2 LFNoise2\cf3 , \cf2 BrownNoise\cf3 , \cf2 PinkNoise\cf3 , \cf2 GrayNoise\cf3 , \cf2 ClipNoise\cf3 , \cf2 WhiteNoise\cf3 , \cf2 Dust2\cf3 \
+\
+methods to use... round, fold, clip, max, min, thresh, hypot, dist, lag, lag2, fold2, wrap, sqrt, pow, abs, +, -, *, /, % \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
