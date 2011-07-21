@@ -1,10 +1,15 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
 {\fonttbl\f0\fnil\fcharset0 Monaco;}
-{\colortbl;\red255\green255\blue255;\red191\green0\blue0;\red0\green0\blue0;\red0\green0\blue191;
+{\colortbl;\red255\green255\blue255;\red0\green0\blue191;\red0\green0\blue0;\red191\green0\blue0;
 }
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs24 \cf2 // You can call a helpfile on every capitalized word, double click on underlined words to get the code \cf3 \
+\f0\fs20 \cf2 Document\cf3 .wikiDir_(\cf2 Document\cf3 .current.dir); \cf4 // execute this code to activate wiki features
+\fs24 \cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf4 // You can call a helpfile on every capitalized word, double click on underlined words to get the code 
+\fs20 \cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
 \fs28 \cf3 \
@@ -13,38 +18,32 @@
 
 \fs24 \cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ul \ulc0 Morning1\cf3 \
+\cf2 \ul \ulc0 Morning1\cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 \cf3 \ulnone evaluating, files and parenthesis \
 comments\
 getting help\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 Client\cf3  vs \cf4 Server\cf3  \ul \ulc0 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 \ulnone variables 			->	a-z, environment \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 methods & operators \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 Function\cf3 			-> 	sound functions, lang functions\
-\cf4 UGen\cf3 				\
+\cf2 Client\cf3  vs \cf2 Server\cf3  \ul \
+\ulnone variables 			->	a-z, environment \
+methods & operators \
+\cf2 Function\cf3 			-> 	sound functions, lang functions\
+\cf2 UGen\cf3 				\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ul Afternoon1\cf3 \
+\cf2 \ul Afternoon1\cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 \cf3 \ulnone ugen overview (short)\
 multichannel expansion\
 few basic examples with functions\
 basic generators and waveshaping, practice:\
 \pard\pardeftab720\ql\qnatural
-\cf3 	ugens to use... \cf4 SinOsc\cf3 , \cf4 Pulse\cf3 , \cf4 LFPulse\cf3 , \cf4 Saw\cf3 , \cf4 LFSaw\cf3 , \cf4 LFTri\cf3 , \cf4 Phasor\cf3 , \cf4 Dust\cf3 , \cf4 Impulse\cf3 , \cf4 LFNoise0\cf3 , \cf4 LFNoise1\cf3 , \cf4 LFNoise2\cf3 , \cf4 BrownNoise\cf3 , \cf4 PinkNoise\cf3 , \cf4 GrayNoise\cf3 , \cf4 ClipNoise\cf3 , \cf4 WhiteNoise\cf3 \
-	\cf4 Dust2\cf3 \
+\cf3 	ugens to use... \cf2 SinOsc\cf3 , \cf2 Pulse\cf3 , \cf2 LFPulse\cf3 , \cf2 Saw\cf3 , \cf2 LFSaw\cf3 , \cf2 LFTri\cf3 , \cf2 Phasor\cf3 , \cf2 Dust\cf3 , \cf2 Impulse\cf3 , \cf2 LFNoise0\cf3 , \cf2 LFNoise1\cf3 , \cf2 LFNoise2\cf3 , \cf2 BrownNoise\cf3 , \cf2 PinkNoise\cf3 , \cf2 GrayNoise\cf3 , \cf2 ClipNoise\cf3 , \cf2 WhiteNoise\cf3 \
+	\cf2 Dust2\cf3 \
 	methods to use... round, fold, clip, max, min, thresh, hypot, dist, lag, lag2, fold2, wrap, sqrt, pow, abs, +, -, *, /, %\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 \cf3 \
------------\
-overflow: \cf4 Filters\cf3 , \cf4 Delay\cf3 , \cf4 Buffer\cf3 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 -----------\
+overflow: \cf2 Synth\cf3 , \cf2 Filters\cf3 , \cf2 Task\cf3 , \cf2 EnvGen\cf3 \
+\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
@@ -52,53 +51,48 @@ overflow: \cf4 Filters\cf3 , \cf4 Delay\cf3 , \cf4 Buffer\cf3 \
 \fs24 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 \cf3 \ul \
-\cf4 Morning2\
+\cf2 Morning2\cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ulnone Filters, Delay  \cf3 \
-\cf4 SynthDef\cf3 \
-\cf4 Event\cf3  / \cf4 Synth\cf3 \
-envelopes \cf4 EnvGen\cf3  			-> doneAction\
-\cf4 Order\cf3  of \cf4 Execution\cf3 \
+\cf2 \ulnone Some\cf3  more \cf2 SynthDefs\cf3  to get back in it\ul \
+\cf2 \ulnone Delay\cf3 , \cf2 Buffer\cf3 (?)  \
+\cf2 Routing\cf3 , \cf2 Order\cf3  of \cf2 Execution\cf3 \
+\cf2 Event\cf3  vs \cf2 Synth\cf3 \
+\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ul Afternoon2\cf3 \
+\cf2 \ul Afternoon2\cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 \ulnone make a few \cf4 Synth\cf3  \
-\cf4 Event\cf3  and \cf4 Pbind\cf3 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 patterns e.g. making a step sequencer\
-practice with \cf4 SynthDef\cf3  and \cf4 Pbind\cf3 \
+\cf3 \ulnone make a few \cf2 Synth\cf3  \
+\cf2 Event\cf3  and \cf2 Pbind\cf3 \
+patterns e.g. making a step sequencer\
+practice with \cf2 SynthDef\cf3  and \cf2 Pbind\cf3 \
 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 -----------\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 overflow: \cf4 Pdef\cf3 , \cf4 ListPattern\cf3 , \cf4 FilterPattern\cf3 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf3 -----------\
+-----------\
+overflow: \cf2 Pdef\cf3 , \cf2 ListPattern\cf3 , \cf2 FilterPattern\cf3 \
+-----------\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\fs28 \cf3 .day 3 Bringing it together with \cf4 JITlib\cf3 , gui for free \
+\fs28 \cf3 .day 3 Bringing it together with \cf2 JITlib\cf3 , gui for free \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
 \fs26 \cf3 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ul Morning3
+\cf2 \ul Morning3
 \fs24 \cf3 \ulnone \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 NodeProxy\cf3 \
-\cf4 Ndef\cf3 \
+\cf2 NodeProxy\cf3 \
+\cf2 Ndef\cf3 \
 freegui (gui overview)\
-\cf4 Spec\cf3 \
+\cf2 Spec\cf3 \
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 \ul Afternoon3\cf3 \ulnone \
+\cf2 \ul Afternoon3\cf3 \ulnone \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf4 SynthDef\cf3  and \cf4 Pattern\cf3  in \cf4 JITlib\cf3 \
+\cf2 SynthDef\cf3  and \cf2 Pattern\cf3  in \cf2 JITlib\cf3 \
 routing\
 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
-\cf0 -----------\cf3 \
+-----------\
 performance\
 \
 \
